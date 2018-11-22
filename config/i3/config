@@ -192,10 +192,10 @@ gaps outer 5
 gaps inner 7
 
 # Screenshot selection
-bindsym --release Print exec "scrot -s -e 'xclip -sel clip -t image/png < $f'"
+bindsym --release Print exec "scrot -s -e 'xclip -sel clip -t image/png < $f;rm $f'"
 
 # Screenshot whole screen
-bindsym --release Shift+Print exec "scrot -e 'xclip -sel clip -t image/png < $f'"
+bindsym --release Shift+Print exec "scrot -e 'xclip -sel clip -t image/png < $f;rm $f'"
 
 # Workspace assignment
 assign [class="Code"] $ws3
