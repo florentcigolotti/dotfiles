@@ -1,6 +1,6 @@
 # Description
 
-This repository contains my personnal dotfiles.
+This repository contains my personal dotfiles.
 Feel free to dig into :)
 
 # Install
