@@ -65,6 +65,9 @@ fi
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+# User pip binaries
+export PATH=$PATH:$HOME/.local/bin
+
 # Fix blank Gnome Control Center with Gnome-i3
 export XDG_CURRENT_DESKTOP=GNOME
 
