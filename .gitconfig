@@ -1,0 +1,29 @@
+[credential]
+	helper = cache --timeout=3600
+[diff "pandoc"]
+	textconv = pandoc --to=markdown
+	promp = false
+[alias]
+	pure = pull --rebase
+	untracked = ls-files --others --exclude-standard
+	logoneline = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	logtwoline = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git logoneline"
+	graph = !"git lg"
+	wdiff = diff --word-diff=color --unified=1
+	# Cherry pick commit sha1 $2 from repo $1 inside current git repo using a three-way merge
+	repo-cherry-pick = !sh -c 'git --git-dir=$1/.git format-patch -k -1 --stdout $2 | git am -3 -k' -- $@
+[status]
+	submoduleSummary = true
+[merge]
+	log = true
+[pager]
+	show = vim -R -
+[push]
+	default = simple
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"

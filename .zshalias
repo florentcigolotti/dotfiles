@@ -1,0 +1,10 @@
+alias zshconf="vim ~/.zshrc"
+alias i3conf="vim ~/.config/i3/config"
+alias vimconf="vim ~/.vimrc"
+alias gitconf="vim ~/.gitconfig"
+alias polybarconf="vim ~/.config/polybar/config"
+alias dunstconf="vim ~/.config/dunst/dunstrc"
+alias editorconfigconf="vim ~/.editorconfig"
+alias vi="vim"
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias lssh="ss -o state established '( dport = :ssh or sport = :ssh )'"
