@@ -100,15 +100,16 @@ bindsym $mod+q focus parent
 bindsym $mod+p exec nautilus
 
 # Workspace renaming
-set $ws1 1:
+# Now they are handled by Polybar
+set $ws1 1:
 set $ws2 2:
-set $ws3 3:
-set $ws4 4:
-set $ws5 5:
-set $ws6 6:
-set $ws7 7:
-set $ws8 8:
-set $ws9 9:
+set $ws3 3:
+set $ws4 4:
+set $ws5 5:
+set $ws6 6:
+set $ws7 7:
+set $ws8 8:
+set $ws9 9:
 set $ws10 10:
 
 # Workspace access shortcut

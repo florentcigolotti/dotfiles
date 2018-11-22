@@ -1,0 +1,316 @@
+; Doc: https://github.com/jaagr/polybar
+; Wiki: https://github.com/jaagr/polybar/wiki
+
+[colors]
+active = #FFFFFF
+background = #000000
+foreground = #FFFFFF
+urgent = #FF0000
+secondary = ${xrdb:secondary}
+underline = #FF0000
+ram = #FFFF00
+# cpu = #FF0000
+cpu = #CCFFBB
+spotify = #FFFFFF
+power= #FF0000
+
+# WITH XRDB
+# active = ${xrdb:active}
+# background = ${xrdb:background}
+# foreground = ${xrdb:foreground}
+# urgent = ${xrdb:color9}
+# secondary = ${xrdb:secondary}
+# underline = ${xrdb:color3}
+# ram = ${xrdb:color14}
+# cpu = ${xrdb:color13}
+# spotify = ${xrdb:color10}
+# power= ${colors.urgent}
+
+[bar/default]
+height = 30
+offset-y = 0
+top = true
+fixed-center = true 
+background = #000000
+foreground = #FFFFFF
+# background = ${colors.background}
+# foreground = ${colors.foreground}
+
+line-size = 1
+line-color = #f00
+
+padding-left = 0
+padding-right = 2
+module-margin = 2
+
+font-0 = System San Francisco Display:size=10;2
+font-1 = FontAwesome:size=11;3
+font-2 = MaterialIcons:size=11;4
+
+modules-left = i3
+modules-center = date spotify
+modules-right = wired volume backlight filesystem cpu memory battery
+
+# Multi-screen
+# [bar/center]
+# inherit = bar/default
+# monitor = HDMI-2
+# # tray-position = right
+# # tray-padding = 0
+# # tray-detached = false
+
+[bar/left]
+inherit = bar/default
+monitor = eDP-1
+tray-position = right
+# tray-padding = 0
+# tray-detached = false
+
+# [bar/right]
+# inherit = bar/default
+# monitor = DVI-I-3-2
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+index-sort = true
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+format = <label-mode><label-state>
+label-mode-padding = 2
+label-focused = %index%  %icon%
+label-focused-padding = 2
+label-unfocused = %index%  %icon%
+label-unfocused-padding = 2
+label-visible = %index%  %icon%
+label-visible-padding = 2
+label-urgent = %index%  %icon%
+label-urgent-padding = 2
+label-focused-foreground = ${colors.active}
+label-focused-background = #29373d
+label-focused-underline = ${colors.underline}
+label-visible-foreground = ${colors.active}
+label-unfocused-foreground = ${colors.secondary}
+label-urgent-foreground = ${colors.urgent} 
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+
+[module/battery]
+type = internal/battery
+full-at = 99
+time-format = %H:%M
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity>  <label-discharging>
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = Fully charged
+# format-charging-underline = #FF5511
+# format-connected-underline = #FF5511
+# format-mounted-underline = #FF5511
+# format-underline = #FF5511
+# format-discharging-underline = #FF5511
+
+# Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+# Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+# Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+# Framerate in milliseconds
+animation-charging-framerate = 750
+
+# Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+# Framerate in milliseconds
+animation-discharging-framerate = 500
+
+[module/backlight]
+type = internal/backlight
+label = %percentage%%
+format = <ramp> <label>
+enable-scroll = true
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+# format-underline = #FF11FF
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted = %{F#FF0000}%{F-} %percentage_used%%
+# label-mounted = %{F#FF0000}%{F-} %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.secondary}
+# format-mounted-underline = #FF5511
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format = <label>
+format-prefix = "  "
+label = %percentage%%
+# format-foreground = ${colors.cpu}
+# label-foreground = ${colors.cpu}
+# format-underline = #5511FF
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+label = %percentage_used%%
+#format-foreground = ${colors.ram}
+#label-foreground = ${colors.ram}
+bar-used-width = 50
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+# format-underline = #f5a70a
+
+[module/date]
+type = internal/date
+date = %{F#88C0D0}   %{F#4C566A}%B %d,  %{F#D8DEE9}%H:%M
+
+[module/volume]
+type = internal/volume
+format-volume = <ramp-volume> <label-volume>
+format-muted =  
+# format-volume-underline = #f5a70a
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-foreground = ${colors.active}
+bar-volume-width = 5
+bar-volume-indicator =
+bar-volume-fill = 
+bar-volume-fill-font = 3
+bar-volume-fill-foreground = ${colors.foreground}
+bar-volume-empty = 
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.secondary}
+
+[module/alsa]
+type = internal/alsa
+
+; cat /proc/asound/cards
+master-soundcard = hw:0
+speaker-soundcard = hw:0
+headphone-soundcard = hw:0
+
+master-mixer = Master
+speaker-mixer = Speaker
+mapped = true
+
+format-volume = <ramp-volume> <bar-volume>
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-foreground = ${colors.active}
+format-muted =  
+
+bar-volume-width = 5
+bar-volume-indicator =
+bar-volume-fill = 
+bar-volume-fill-font = 3
+bar-volume-fill-foreground = ${colors.foreground}
+bar-volume-empty = 
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.secondary}
+
+interval = 5
+
+[module/pulseaudio]
+type = internal/pulseaudio
+# sink = alsa_output.pci-0000_00_1f.3.analog-stereo
+use-ui-max = true
+interval = 5
+
+[module/wired]
+type = internal/network
+interface = wlp3s0
+format-connected = <label-connected>
+# format-connected-underline = ${colors.underline}
+format-disconnected = <label-disconnected>
+label-connected =   %local_ip%
+label-disconnected = 
+
+[module/powermenu]
+type = custom/menu
+label-active-font = 1
+format-spacing = 1
+label-open = 
+label-open-foreground = ${colors.power}
+label-close = 
+label-close-foreground = ${colors.power}
+label-separator = |
+label-separator-foreground = ${colors.secondary}
+
+menu-0-0 = reboot
+menu-0-0-foreground = ${colors.foreground}
+menu-0-0-exec = reboot
+menu-0-1 = power off
+menu-0-1-foreground = ${colors.foreground}
+menu-0-1-exec = poweroff
+
+[module/spotify]
+type = custom/script
+#exec-if = ~/.config/polybar/spotify.sh --isPlaying
+exec = ~/.config/polybar/spotify.sh --title
+click-left = i3-msg workspace 8:
+click-right = ~/.config/polybar/spotify.sh --next
+interval = 1
+format=   <label> 
+format-foreground= ${colors.spotify}
+# format-underline = ${colors.underline}
+label = %output%
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+

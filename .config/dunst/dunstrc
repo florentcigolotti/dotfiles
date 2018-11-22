@@ -10,6 +10,9 @@
     # The geometry of the window: [{width}]x{height}[+/-{x}+/-{y}]
     geometry = "280x5-6+30"
 
+    # Shrink window if it's smaller than the width.  Will be ignored if width is 0.
+    shrink = no
+
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
 
@@ -17,7 +20,7 @@
     transparency = 0
 
     # Draw a line of "separator_height" pixel height between two notifications.
-    separator_height = 2
+    separator_height = 1
 
     # Padding between text and separator.
     padding = 8
@@ -26,7 +29,7 @@
     horizontal_padding = 8
 
     # Defines width in pixels of frame around the notification window.
-    frame_width = 1
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
     frame_color = "#383838"
@@ -42,7 +45,7 @@
 
     ### Text ###
 
-    font = "Droid Sans 8"
+    font = "Droid Sans 9"
 
     # Allow a small subset of html markup in notifications
     markup = full
