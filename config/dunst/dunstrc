@@ -1,0 +1,146 @@
+[global]
+    ### Display ###
+
+    # Which monitor should the notifications be displayed on.
+    monitor = 0
+
+    # Display notification on focused monitor.
+    follow = mouse
+
+    # The geometry of the window: [{width}]x{height}[+/-{x}+/-{y}]
+    geometry = "280x5-6+30"
+
+    # Show how many messages are currently hidden (because of geometry).
+    indicate_hidden = yes
+
+    # The transparency of the window. Works if a compositing window manager is running
+    transparency = 0
+
+    # Draw a line of "separator_height" pixel height between two notifications.
+    separator_height = 2
+
+    # Padding between text and separator.
+    padding = 8
+
+    # Horizontal padding.
+    horizontal_padding = 8
+
+    # Defines width in pixels of frame around the notification window.
+    frame_width = 1
+
+    # Defines color of the frame around the notification window.
+    frame_color = "#383838"
+
+    # Define a color for the separator.
+    separator_color = "#585858"
+
+    # Sort messages by urgency.
+    sort = yes
+
+    # Don't remove messages, if the user is idle
+    idle_threshold = 120
+
+    ### Text ###
+
+    font = "Droid Sans 8"
+
+    # Allow a small subset of html markup in notifications
+    markup = full
+
+    # The format of the message.  Possible variables are:
+    #   %a  appname
+    #   %s  summary
+    #   %b  body
+    #   %i  iconname (including its path)
+    #   %I  iconname (without its path)
+    #   %p  progress value if set ([  0%] to [100%]) or nothing
+    #   %n  progress value if set without any extra characters
+    #   %%  Literal %
+    # Markup is allowed
+    format = "<b>%s</b>\n%b"
+
+    # Alignment of message text.
+    alignment = center
+
+    # Show age of message if message is older than show_age_threshold seconds.
+    show_age_threshold = 60
+
+    # Split notifications into multiple lines if they don't fit into geometry
+    word_wrap = yes
+
+    # Ignore newlines '\n' in notifications.
+    ignore_newline = no
+
+    # The spacing between lines.
+    line_height = 0
+
+    ### Icons ###
+
+    # Align icons left/right/off
+    icon_position = left
+
+    # Paths to default icons.
+    icon_path = /usr/share/icons/Humanity/status/24/:/usr/share/icons/gnome/24x24/status/
+
+    # To resize Spotify icon - See dunst FAQ
+    max_icon_size = 96
+
+    ### History ###
+
+    # Should a notification popped up from history be sticky or timeout as if it would normally do.
+    sticky_history = yes
+
+    # Maximum amount of notifications kept in history
+    history_length = 20
+
+    ### Misc/Advanced ###
+
+    # dmenu path.
+    dmenu = /usr/bin/dmenu -p dunst:
+
+    # Browser for opening urls in context menu.
+    browser = /usr/bin/google-chrome
+
+    # Always run rule-defined scripts, even if the notification is suppressed
+    always_run_script = true
+
+    # Define the title of the windows spawned by dunst
+    title = Dunst
+
+    # Define the class of the windows spawned by dunst
+    class = Dunst
+
+    # Print a notification on startup.
+    startup_notification = false
+
+    # Manage dunst's desire for talking (crit, warn, mesg, info, debug)
+    verbosity = mesg
+
+    # Define the corner radius of the notification window
+    corner_radius = 0
+
+[shortcuts]
+    close = mod4+shift+p
+    close_all = mod4+shift+p
+    history = mod4+ctrl+h
+    context = mod4+ctrl+m
+
+[urgency_low]
+    background = "#181818"
+    foreground = "#E3C7AF"
+    timeout = 5
+
+[urgency_normal]
+    background = "#181818"
+    foreground = "#FFFFFF"
+    timeout = 20
+
+[urgency_critical]
+    background = "#181818"
+    foreground = "#FF0000"
+    timeout = 0
+
+[Spotify]
+    appname = "Spotify"
+    format = "<b>Now Playing</b>\n%s\n%b"
+    timeout = 10
