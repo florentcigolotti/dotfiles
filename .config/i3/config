@@ -24,9 +24,9 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Define custom colors
 # client.focused.indicator
-set $cfin        #24db13
+set_from_resource $cfin i3wm.focus #24db13
 # client.focused.child_border
-set $cfcb        #c12e2e
+set_from_resource $cfcb i3wm.urgent #FF0000
 
 # Use Window as the mod key
 set $mod Mod4
@@ -186,7 +186,7 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 # Remove title bar
-default_border pixel 2
+default_border pixel 1
 
 # i3 gaps - Airblader
 gaps outer 5

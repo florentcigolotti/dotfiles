@@ -1,1 +1,9 @@
 ! Syntax: name.Class.resource: value
+
+*active:     #D8DEE9
+*secondary:  #4C566A
+*background: #000000
+*foreground: #FFFFFF
+*urgent:     #FF0000
+*underline:  #FF0000
+*focus:      #24db13

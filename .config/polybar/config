@@ -2,42 +2,25 @@
 ; Wiki: https://github.com/jaagr/polybar/wiki
 
 [colors]
-active = #FFFFFF
-background = #000000
-foreground = #FFFFFF
-urgent = #FF0000
+active = ${xrdb:active}
 secondary = ${xrdb:secondary}
-underline = #FF0000
-ram = #FFFF00
-# cpu = #FF0000
-cpu = #CCFFBB
-spotify = #FFFFFF
-power= #FF0000
-
-# WITH XRDB
-# active = ${xrdb:active}
-# background = ${xrdb:background}
-# foreground = ${xrdb:foreground}
-# urgent = ${xrdb:color9}
-# secondary = ${xrdb:secondary}
-# underline = ${xrdb:color3}
-# ram = ${xrdb:color14}
-# cpu = ${xrdb:color13}
-# spotify = ${xrdb:color10}
-# power= ${colors.urgent}
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+urgent = ${xrdb:urgent}
+underline= ${xrdb:underline}
+power= ${xrdb.urgent}
+focus_background = #29373d
 
 [bar/default]
 height = 30
 offset-y = 0
 top = true
 fixed-center = true 
-background = #000000
-foreground = #FFFFFF
-# background = ${colors.background}
-# foreground = ${colors.foreground}
+background = ${colors.background}
+foreground = ${colors.foreground}
 
 line-size = 1
-line-color = #f00
+line-color = ${colors.urgent}
 
 padding-left = 0
 padding-right = 2
@@ -90,7 +73,7 @@ label-visible-padding = 2
 label-urgent = %index%  %icon%
 label-urgent-padding = 2
 label-focused-foreground = ${colors.active}
-label-focused-background = #29373d
+label-focused-background = ${colors.focus_background}
 label-focused-underline = ${colors.underline}
 label-visible-foreground = ${colors.active}
 label-unfocused-foreground = ${colors.secondary}
@@ -115,11 +98,6 @@ format-discharging = <ramp-capacity>  <label-discharging>
 label-charging = %percentage%%
 label-discharging = %percentage%%
 label-full = Fully charged
-# format-charging-underline = #FF5511
-# format-connected-underline = #FF5511
-# format-mounted-underline = #FF5511
-# format-underline = #FF5511
-# format-discharging-underline = #FF5511
 
 # Only applies if <ramp-capacity> is used
 ramp-capacity-0 = 
@@ -162,7 +140,6 @@ ramp-1 = 🌔
 ramp-2 = 🌓
 ramp-3 = 🌒
 ramp-4 = 🌑
-# format-underline = #FF11FF
 
 ; Only applies if <bar> is used
 bar-width = 10
@@ -179,10 +156,8 @@ type = internal/fs
 interval = 25
 mount-0 = /
 label-mounted = %{F#FF0000}%{F-} %percentage_used%%
-# label-mounted = %{F#FF0000}%{F-} %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.secondary}
-# format-mounted-underline = #FF5511
 
 [module/cpu]
 type = internal/cpu
@@ -190,23 +165,21 @@ interval = 2
 format = <label>
 format-prefix = "  "
 label = %percentage%%
-# format-foreground = ${colors.cpu}
-# label-foreground = ${colors.cpu}
-# format-underline = #5511FF
+format-foreground = ${colors.foreground}
+label-foreground = ${colors.foreground}
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "RAM "
 label = %percentage_used%%
-#format-foreground = ${colors.ram}
-#label-foreground = ${colors.ram}
+format-foreground = ${colors.foreground}
+label-foreground = ${colors.foreground}
 bar-used-width = 50
 bar-used-foreground-0 = #55aa55
 bar-used-foreground-1 = #557755
 bar-used-foreground-2 = #f5a70a
 bar-used-foreground-3 = #ff5555
-# format-underline = #f5a70a
 
 [module/date]
 type = internal/date
@@ -216,7 +189,6 @@ date = %{F#88C0D0}   %{F#4C566A}%B %d,  %{F#D8DEE9}%H:%M
 type = internal/volume
 format-volume = <ramp-volume> <label-volume>
 format-muted =  
-# format-volume-underline = #f5a70a
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
@@ -272,7 +244,6 @@ interval = 5
 type = internal/network
 interface = wlp3s0
 format-connected = <label-connected>
-# format-connected-underline = ${colors.underline}
 format-disconnected = <label-disconnected>
 label-connected =   %local_ip%
 label-disconnected = 
@@ -303,8 +274,7 @@ click-left = i3-msg workspace 8:
 click-right = ~/.config/polybar/spotify.sh --next
 interval = 1
 format=   <label> 
-format-foreground= ${colors.spotify}
-# format-underline = ${colors.underline}
+format-foreground= ${colors.foreground}
 label = %output%
 
 [settings]
