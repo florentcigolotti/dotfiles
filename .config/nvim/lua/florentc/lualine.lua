@@ -1,18 +1,19 @@
-require('lualine').setup{
-  options = {theme = 'gruvbox_material'},
+require("lualine").setup({
+  options = { theme = "kanagawa" },
   sections = {
-    lualine_a = {"mode"},
-    lualine_b = {"branch"},
+    lualine_a = { "mode" },
+    lualine_b = { "branch" },
     lualine_c = {
-      {"diagnostics", sources = {"nvim_lsp"}},
+      { "diagnostics", sources = { "nvim_diagnostic" } },
+      { require("auto-session-library").current_session_name },
       "filename",
     },
     lualine_x = {
       "encoding",
       "fileformat",
-      "filetype"
+      "filetype",
     },
-    lualine_y = {"progress"},
-    lualine_z = {"location"}
+    lualine_y = { "progress" },
+    lualine_z = { "location" },
   },
-}
+})

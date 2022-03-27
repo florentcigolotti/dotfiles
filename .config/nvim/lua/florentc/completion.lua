@@ -1,162 +1,91 @@
--- local utils = require('florentc.utils')
--- local g = vim.g
--- local cmd = vim.cmd
+local cmp = require("cmp")
+local lspkind = require("lspkind")
+local luasnip = require("luasnip")
 
--- -- Old config using nvim-lua/completion-nvim
---
--- utils.map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
--- utils.map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
---
--- utils.opt('o', 'completeopt', 'menuone,noinsert,noselect')
--- cmd [[set shortmess+=c]]
--- g.completion_confirm_key = ""
--- g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
-
--- Testing compe
-
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = false;
-    ultisnips = false;
-    luasnip = true;
-  };
-}
-
-local function prequire(...)
-    local status, lib = pcall(require, ...)
-    if (status) then return lib end
-    return nil
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local luasnip = prequire('luasnip')
+cmp.setup({
+  formatting = {
+    format = lspkind.cmp_format({
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      },
+    }),
+  },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ["<C-e>"] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "nvim_lua" },
+    { name = "luasnip" },
+    { name = "path" },
+    { name = "buffer", keyword_length = 3 },
+  }),
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  },
+})
 
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
-end
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline("/", {
+  sources = {
+    { name = "buffer" },
+  },
+})
 
-_G.tab_complete = function()
-    -- If the PopUpMenu is visible return <c-n> (navigation in the popup)
-    if vim.fn.pumvisible() == 1 then
-        return t "<C-n>"
-    -- luasnip control
-    elseif luasnip and luasnip.expand_or_jumpable() then
-        return t "<Plug>luasnip-expand-or-jump"
-    -- If backspace is called, send tab to re-trigger the completion
-    elseif check_back_space() then
-        return t "<Tab>"
-    -- Else call compe complete function
-    else
-        return vim.fn['compe#complete']()
-    end
-end
-_G.s_tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return t "<C-p>"
-    elseif luasnip and luasnip.jumpable(-1) then
-        return t "<Plug>luasnip-jump-prev"
-    else
-        return t "<S-Tab>"
-    end
-end
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(":", {
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-vim.cmd([[
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-]])
-
-local function copy(args)
-	return args[1]
-end
-
-local ls = require("luasnip")
-local s = ls.snippet
-local tn = ls.text_node
-local i = ls.insert_node
-local f = ls.function_node
-
-ls.snippets = {
-	all = {
-		-- trigger is fn.
-		s("fn", {
-			-- Simple static text.
-			tn("//Parameters: "),
-			-- function, first parameter is the function, second the Placeholders
-			-- whose text it gets as input.
-			f(copy, 2),
-			tn({ "", "function " }),
-			-- Placeholder/Insert.
-			i(1),
-			tn("("),
-			-- Placeholder with initial text.
-			i(2, "int foo"),
-			-- Linebreak
-			tn({ ") {", "\t" }),
-			-- Last Placeholder, exit Point of the snippet. EVERY 'outer' SNIPPET NEEDS Placeholder 0.
-			i(0),
-			tn({ "", "}" }),
-		}),
-		s("class", {
-			-- Simple static text.
-			tn("//Parameters: "),
-			-- function, first parameter is the function, second the Placeholders
-			-- whose text it gets as input.
-			f(copy, 2),
-			tn({ "", "function " }),
-			-- Placeholder/Insert.
-			i(1),
-			tn("("),
-			-- Placeholder with initial text.
-			i(2, "int foo"),
-			-- Linebreak
-			tn({ ") {", "\t" }),
-			-- Last Placeholder, exit Point of the snippet. EVERY 'outer' SNIPPET NEEDS Placeholder 0.
-			i(0),
-			tn({ "", "}" }),
-		}),
-    }
-}
-
--- Extend to vscode snippets
--- vim.o.runtimepath = vim.o.runtimepath..',/Users/florentc/.local/share/nvim/site/pack/paqs/start/friendly-snippets/snippets'
--- require("luasnip/loaders/from_vscode").load()
-    require("luasnip/loaders/from_vscode").lazy_load({ path = "/Users/florentc/.local/share/nvim/site/pack/paqs/start/friendly-snippets/snippets"})
-
+require("luasnip/loaders/from_vscode").lazy_load({
+  path = require("packer").config.package_root .. "paqs/start/friendly-snippets/snippets",
+})
