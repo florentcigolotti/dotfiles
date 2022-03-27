@@ -41,8 +41,6 @@ return require('packer').startup(function()
         options = {
           view = "default",
           numbers = "none",
-          number_style = "superscript",
-          mappings = true,
           buffer_close_icon= '',
           modified_icon = '●',
           close_icon = '',
