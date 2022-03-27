@@ -155,7 +155,7 @@ end
 
 -- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "rust_analyzer", "tsserver", "gopls", "bashls", "clangd" }
+local servers = { "pyright", "rust_analyzer", "tsserver", "eslint",  "gopls", "bashls", "clangd" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup { on_attach = on_attach }
 end
