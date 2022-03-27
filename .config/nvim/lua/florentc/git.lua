@@ -28,6 +28,15 @@ require('gitsigns').setup {
 
 utils.map('n', '<leader>gl', ':G log<CR>')
 utils.map('n', '<Leader>gs', '<cmd>Git<CR>')
+utils.map('n', '<leader>gp', '<cmd>lua require("florentc.git").git_push_to_current()<cr>')
+
+local M = {}
+
+M.git_push_to_current = function()
+  if vim.fn.input('Confirm Git push? ') == 'Y' then
+    vim.api.nvim_command('Git -c push.default=current push')
+  end
+end
 
 -- Testing neogit
 
@@ -35,3 +44,4 @@ local neogit = require('neogit')
 
 neogit.setup {}
 
+return M
