@@ -23,7 +23,7 @@ utils.map("v", "<C-f>", 'y<ESC><cmd>lua require("telescope.builtin").live_grep {
 -- personal
 
 utils.map("n", "<leader>p", '<cmd>lua require("florentc.telescope").project_files()<cr>')
-utils.map("n", "<leader>df", '<cmd>lua require("florentc.telescope").find_dotfiles()<cr>')
+utils.map("n", "<leader>df", '<cmd>lua require("florentc.telescope").find_nvim_files()<cr>')
 utils.map("n", "<leader>fn", '<cmd>lua require("florentc.telescope").find_notes()<cr>')
 -- utils.map("n", "<leader>ff", '<cmd>lua require("florentc.telescope").find_features()<cr>')
 utils.map("n", "<leader>fe", '<cmd>lua require("florentc.telescope").find_envs()<cr>')
@@ -129,7 +129,7 @@ require("telescope").load_extension("notify")
 
 local M = {}
 
-M.find_dotfiles = function()
+M.find_nvim_files = function()
   require("telescope.builtin").find_files({
     prompt_title = "dotfiles",
     cwd = "$HOME/projects/perso/dotfiles/.config/nvim",
