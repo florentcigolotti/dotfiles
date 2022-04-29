@@ -21,7 +21,9 @@ utils.map("n", "<leader>n", ":bnext<cr>")
 utils.map("n", "<leader>N", ":bprev<cr>")
 
 -- Terminal
--- utils.map("n", "<leader>ty", ":vnew|term<cr>")
+utils.map("n", "<leader>tt", ":term<cr>")
+utils.map("n", "<leader>tv", ":vnew|term<cr>")
+utils.map("n", "<leader>th", ":new|term<cr>")
 
 -- utils.map("n", "<leader>rt", ":!go test -v ./...<CR>")
 utils.map("n", "<leader>rt", ":!ls -al<CR>")
