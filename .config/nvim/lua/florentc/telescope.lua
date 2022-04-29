@@ -64,6 +64,7 @@ require("telescope").setup({
     buffer_previewer_maker = truncate_large_files,
     -- file_sorter =  require'telescope.sorters'.get_fzy_sorter,
     -- generic_sorter =  require'telescope.sorters'.get_fzy_sorter,
+    file_ignore_patterns = {".git/"},
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
@@ -92,7 +93,9 @@ require("telescope").setup({
     },
     live_grep = {
       additional_args = function()
-        return { "--hidden" }
+        return {
+          "--hidden",
+        }
       end,
     },
   },
