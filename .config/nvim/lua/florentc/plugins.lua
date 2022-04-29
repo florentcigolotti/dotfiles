@@ -93,6 +93,8 @@ return require("packer").startup(function(use)
   -- use("fatih/vim-go")
   -- Bitbake
   use("kergoth/vim-bitbake")
+  -- Helm
+  use("towolf/vim-helm")
   -- Cue
   use("jjo/vim-cue")
   -- Debugging
