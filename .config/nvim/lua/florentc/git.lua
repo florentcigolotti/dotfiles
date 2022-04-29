@@ -63,6 +63,9 @@ require("diffview").setup({
     file_panel = { q = "<Cmd>DiffviewClose<CR>" },
     view = { q = "<Cmd>DiffviewClose<CR>" },
   },
+  default_args = {
+    DiffviewOpen = { "--untracked-files=no", "--imply-local" },
+  },
 })
 
 utils.map("n", "<leader>gd", ":DiffviewOpen<CR>")
