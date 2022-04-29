@@ -74,7 +74,12 @@ return require("packer").startup(function(use)
   use("ray-x/lsp_signature.nvim")
 
   -- Utils
-  use("kyazdani42/nvim-tree.lua")
+  use({
+    "kyazdani42/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup()
+    end,
+  })
   use("mg979/vim-visual-multi")
   use("tomtom/tcomment_vim")
   use({
