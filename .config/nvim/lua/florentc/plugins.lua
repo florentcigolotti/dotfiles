@@ -90,6 +90,19 @@ return require("packer").startup(function(use)
   use("michaeljsmith/vim-indent-object")
   use("editorconfig/editorconfig-vim")
   use("lewis6991/impatient.nvim")
+  use({
+    "nvim-pack/nvim-spectre",
+    config = function()
+      require("spectre").setup()
+    end,
+  })
+  use("samjwill/nvim-unception")
+  use({
+    "smjonas/inc-rename.nvim",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  })
 
   -- Dev
   -- Lua
